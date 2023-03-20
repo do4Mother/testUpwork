@@ -118,9 +118,14 @@ required
          type="submit"
        
        >
-
+{loading ? (
+<>
+<LoadingDots />
 <span className="sr-only">Generating bullet poinss...</span>
-
+</>
+) : (
+"Generate Bullet Points"
+)}
 </button>
 
 <div className="space-y-10 my-10">
