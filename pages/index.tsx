@@ -116,16 +116,11 @@ required
 <button
          className="mt-10 w-full bg-sky-500 text-white py-3 rounded-md hover:bg-sky-600 transition-colors duration-300"
          type="submit"
-         disabled={loading}
+       
        >
-{loading ? (
-<>
-<LoadingDots />
+
 <span className="sr-only">Generating bullet poinss...</span>
-</>
-) : (
-"Generate Bullet Points"
-)}
+
 </button>
 
 <div className="space-y-10 my-10">
