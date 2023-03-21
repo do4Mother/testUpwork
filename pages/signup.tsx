@@ -39,19 +39,19 @@ const SignUp = () => {
       <input type="hidden" name="remember" value="true"></input>
       <div className="-space-y-px rounded-md shadow-sm">
         <div>
-          <label for="email-address" className="sr-only">Email address</label>
-          <input onChange={(e:any)=> setData({...data, email:e.target.value})}  value= {data.email} id="email-address" name="email" type="email" autocomplete="email" required className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Email address"></input>
+          <label className="sr-only">Email address</label>
+          <input onChange={(e:any)=> setData({...data, email:e.target.value})}  value= {data.email} id="email-address" name="email" type="email"  required className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Email address"></input>
         </div>
         <div>
-          <label for="password" className="sr-only">Password</label>
-          <input onChange={(e:any)=> setData({...data, password:e.target.value})}  value= {data.password} id="password" name="password" type="password" autocomplete="current-password" required className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Password"></input>
+          <label className="sr-only">Password</label>
+          <input onChange={(e:any)=> setData({...data, password:e.target.value})}  value= {data.password} id="password" name="password" type="password"  required className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Password"></input>
         </div>
       </div>
 
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"></input>
-          <label for="remember-me" className="ml-2 block text-sm text-gray-900">Remember me</label>
+          <label  className="ml-2 block text-sm text-gray-900">Remember me</label>
         </div>
 
         <div className="text-sm">
