@@ -4,8 +4,7 @@ import Image from "next/image";
 import { useRef, useState, useContext, useEffect } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import Footer from "../components/Footer";
-import Github from "../components/GitHub";
-import Header from "../components/Header";
+
 import LoadingDots from "../components/LoadingDots";
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from "next/router";
@@ -155,7 +154,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
   
-      <Header />
+     
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
         <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
           Improve your bullet points using AI
@@ -202,7 +201,7 @@ required
 
 <Link href="/login">
   <button
-  className="mt-10 w-full bg-sky-500 text-white py-3 rounded-md hover:bg-sky-600 transition-colors duration-300"
+  className="mt-10 w-full bg-gray-800 text-white py-3 rounded-md hover:bg-sky-600 transition-colors duration-300"
   type="submit"
   disabled={loading}
 >
