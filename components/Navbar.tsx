@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const { user, logout } = useAuth()
+  console.log("Navbar rendered");
     return(
 
 <nav className="bg-gray-800">

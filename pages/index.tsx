@@ -1,20 +1,58 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext, useEffect } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import Footer from "../components/Footer";
 import Github from "../components/GitHub";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
+import { useAuth } from '../context/AuthContext';
+import { useRouter } from "next/router";
+import Link from 'next/link'
+import  { db, storage } from "../config/firebase"
+import { collection, addDoc, updateDoc, setDoc, serverTimestamp, getDoc, doc } from "firebase/firestore"; 
+
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [bulletPoints, setBulletPoints] = useState("");
   const [generatedBulletPoints, setGeneratedBulletPoints] = useState<string>("");
   const [jobTitle, setJobTitle] = useState("");
+  
+  const auth = useAuth();
+  const router = useRouter();
+
+  const { user } = useAuth();
+  const [freeRewritesLeft, setFreeRewritesLeft] = useState<number | null>(null);
+
+
+  useEffect(() => {
+    const fetchFreeRewritesLeft = async () => {
+      if (auth.user) {
+        const userId = auth.user.uid;
+        const userDocRef = doc(db, "users", userId);
+  
+        try {
+          const userDoc = await getDoc(userDocRef);
+  
+          if (userDoc.exists()) {
+            const data = userDoc.data();
+            setFreeRewritesLeft(data?.freeRewritesLeft ?? null);
+          } else {
+            console.log("userDoc does not exist");
+          }
+        } catch (e) {
+          console.error("Error fetching freeRewritesLeft: ", e);
+        }
+      }
+    };
+  
+    fetchFreeRewritesLeft();
+  }, [auth.user]);
 
   const bulletPointsRef = useRef<null | HTMLDivElement>(null);
+  
 
   const scrollToGeneratedBulletPoints = () => {
     if (bulletPointsRef.current !== null) {
@@ -30,6 +68,21 @@ const Home: NextPage = () => {
     e.preventDefault();
     setGeneratedBulletPoints("");
     setLoading(true);
+    console.log("Free rewrites left:", freeRewritesLeft);
+
+    //if (freeRewritesLeft <= 0) {
+    //  toast.error("You need to pay to keep generating bullet points.");
+    //  setLoading(false);
+    //  return;
+    //}
+
+    // Validate form fields
+  if (!bulletPoints || !jobTitle) {
+    toast.error("Please fill in all the required fields.");
+    setLoading(false);
+    return;
+  }
+    
     const response = await fetch("/api/generate", {
       method: "POST",
       headers: {
@@ -62,7 +115,39 @@ const Home: NextPage = () => {
     }
     scrollToGeneratedBulletPoints();
     setLoading(false);
+    await updateFreeRewritesLeft();
   };
+
+  const updateFreeRewritesLeft = async () => {
+    if (auth.user) {
+      const userId = auth.user.uid;
+      const userDocRef = doc(db, "users", userId);
+  
+      try {
+        // Use getDoc() instead of doc() to check if the document exists
+        const userDoc = await getDoc(userDocRef);
+  
+        if (userDoc.exists()) {
+          const newFreeRewritesLeft = userDoc.data().freeRewritesLeft - 1;
+  
+          // Use updateDoc() to update the document with the new value
+          await updateDoc(userDocRef, {
+            freeRewritesLeft: newFreeRewritesLeft,
+          });
+  
+          console.log("freeRewritesLeft updated", newFreeRewritesLeft);
+          // Update state
+          setFreeRewritesLeft(newFreeRewritesLeft);
+        } else {
+          console.log("userDoc does not exist");
+        }
+      } catch (e) {
+        console.error("Error updating freeRewritesLeft: ", e);
+      }
+    }
+  };
+
+
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Head>
@@ -113,20 +198,46 @@ placeholder="e.g. Increased social media engagement by 20%"
 onChange={(e) => setBulletPoints(e.target.value)}
 required
 ></textarea>
-<button
-         className="mt-10 w-full bg-sky-500 text-white py-3 rounded-md hover:bg-sky-600 transition-colors duration-300"
-         type="submit"
-       
-       >
-{loading ? (
-<>
-<LoadingDots />
-<span className="sr-only">Generating bullet poinss...</span>
-</>
-) : (
-"Generate Bullet Points"
-)}
+{!auth.user ? (
+
+<Link href="/login">
+  <button
+  className="mt-10 w-full bg-sky-500 text-white py-3 rounded-md hover:bg-sky-600 transition-colors duration-300"
+  type="submit"
+  disabled={loading}
+>
+  Login to {freeRewritesLeft === 0 ? "Get Infinite Rewrites" : "Generate Bullet Points"}
 </button>
+</Link>
+) : (
+<>
+  {freeRewritesLeft === 0 ? (
+    <button
+      
+      className="mt-10 w-full bg-green-500 text-white py-3 rounded-md hover:bg-green-600 transition-colors duration-300"
+      type="button"
+    ><a href="https://buy.stripe.com/test_fZe6pZa8V8UO8JWdQR">
+      Get Infinite Rewrites for $2.99
+      </a>
+    </button>
+   
+  ) : (
+    <button
+      onClick={generateBulletPoints}
+      className="mt-10 w-full bg-sky-500 text-white py-3 rounded-md hover:bg-green-600 transition-colors duration-300"
+      type="button"
+    >
+      {loading ? (
+        <>
+          Generating bullet points <LoadingDots />
+        </>
+      ) : (
+        "Generate Bullet Points"
+      )}
+    </button>
+  )}
+</>
+)}
 
 <div className="space-y-10 my-10">
   {generatedBulletPoints && (

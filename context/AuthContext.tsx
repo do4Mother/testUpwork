@@ -1,6 +1,7 @@
 import React, { useContext, createContext, useEffect, useState } from "react";
-import  { auth } from "../config/firebase"
+import  { auth, db, storage } from "../config/firebase"
 import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
+import { collection, addDoc, updateDoc, serverTimestamp, getDoc, setDoc, doc } from "firebase/firestore"; 
 
 
 const AuthContext = createContext<any>({})
@@ -20,6 +21,7 @@ export const AuthContextProvider = ({
 
 
     useEffect(() => {
+        console.log('useEffect called');
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if(user){
                 setUser({
@@ -27,7 +29,10 @@ export const AuthContextProvider = ({
                     email: user.email,
                     displayName: user.displayName,
                 })
+       
+            
             }
+            
             else{
                 setUser(null)
             }
@@ -36,9 +41,24 @@ export const AuthContextProvider = ({
         return () => unsubscribe()
     }, [])
 
-    const signup = (email: string, password: string) =>{
-        return createUserWithEmailAndPassword(auth, email, password)
-    }
+    const signup = async (email: string, password: string) => {
+        try {
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+          const userDocRef = doc(db, "users", user.uid);
+          const userDocSnapshot = await getDoc(userDocRef);
+          if (!userDocSnapshot.exists()) {
+            await setDoc(userDocRef, {
+              email: user.email,
+              freeRewritesLeft: 2,
+              paidUser: false
+            });
+          }
+          return userCredential;
+        } catch (error) {
+          throw error;
+        }
+      };
 
     const login = (email: string, password: string) =>{
         return signInWithEmailAndPassword(auth, email, password)

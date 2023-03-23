@@ -13,6 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
   return (
     <>
+
     <AuthContextProvider>
       <Navbar/>
       {noAuthRequired.includes(router.pathname) ? (
@@ -22,8 +23,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </ProtectedRoute>
       )}
-      <Component {...pageProps} />
-      <Analytics />
     </AuthContextProvider>
     </>
   );
