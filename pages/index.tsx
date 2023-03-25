@@ -59,7 +59,8 @@ const Home: NextPage = () => {
     }
   };
 
-  const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that demonstrate the candidate's relevant skills and experiences for a ${jobTitle} position. Avoid using the exact job title in the bullet points. Instead, aim for specificity and clarity in each point to showcase the candidate's suitability for the role. Begin each bullet point with the symbol ● to maintain consistency.`
+  const prompt = `Using the ${bulletPoints} provided, expand on each point to showcase the candidate's relevant skills and experiences for a ${jobTitle} position. To ensure clarity and specificity, avoid using the exact job title in the bullet points. Instead, use concrete examples and results to demonstrate the candidate's suitability for the role. Begin each bullet point with the symbol ● to maintain consistency. Give me 6 bullet points in total.`
+  //const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that demonstrate the candidate's relevant skills and experiences for a ${jobTitle} position. Avoid using the exact job title in the bullet points. Instead, aim for specificity and clarity in each point to showcase the candidate's suitability for the role. Begin each bullet point with the symbol ● to maintain consistency.`
   // OG PROMPT const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that showcase the candidate's relevant skills and experiences for a ${jobTitle} position. Avoid using the exact job title in the bullet points. Aim for specificity and clarity in each point to demonstrate the candidate's suitability for the role. Always use this to start a bullet point ●`;
   //const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that emphasize the candidate's qualifications and suitability for a ${jobTitle} position. Avoid directly stating the job title in the bullet points. Ensure that each bullet point is clear, concise, and highlights a specific skill or experience that makes the candidate a strong fit for the role. Always use this to start a bullet point ●`;
   //const prompt = `Rewrite the bullet points in a way that highlights the candidate's suitability for the ${jobTitle} position: ${bulletPoints}. Make sure you don't include the ${jobTitle} in the bullet points. Make sure you generate a total of 6 bullet points including the ones the user provided.`;
@@ -176,12 +177,13 @@ required
 />
 <div className="flex mt-10 items-center space-x-3">
 <p className="text-left text-lg font-black">
-Enter your current bullet points:
+Enter your current bullet points (2 bullet points at a time or max 320 characters):
 </p>
 </div>
 <textarea
 className="w-full border border-gray-400 py-3 px-4 mt-2 rounded-md focus:outline-none focus:border-sky-500 h-40"
 placeholder="e.g. Performed application software design and development as well as maintenance activities for products in production using Python"
+maxLength={320}
 onChange={(e) => setBulletPoints(e.target.value)}
 required
 ></textarea>
