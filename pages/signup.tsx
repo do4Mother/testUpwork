@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext"
 const SignUp = () => {
   const router = useRouter()
   const { user, signup } = useAuth()
-  console.log(user)
+  //console.log(user)
   
   const [data, setData] = useState({
     email: '',
@@ -19,10 +19,10 @@ const SignUp = () => {
             await signup(data.email, data.password)
             router.push("/")
         } catch(err){
-            console.log(err)
+            //console.log(err)
         }
 
-    console.log(data)
+    //console.log(data)
   }
 
   return (

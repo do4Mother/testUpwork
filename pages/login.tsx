@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useAuth } from "../context/AuthContext"
-
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { auth } from "../config/firebase"
+import { collection, addDoc, updateDoc, serverTimestamp, getDoc, setDoc, doc } from "firebase/firestore";
+import  { db } from "../config/firebase"
 
 const Login = () => {
   const router = useRouter()
@@ -11,14 +14,37 @@ const Login = () => {
     password: '',
   })
 
+  const googleAuth =  new GoogleAuthProvider();
+
+  const loginWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleAuth);
+      const user = auth.currentUser;
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        const userDocSnapshot = await getDoc(userDocRef);
+        if (!userDocSnapshot.exists()) {
+          await setDoc(userDocRef, {
+            email: user.email,
+            freeRewritesLeft: 2,
+            paidUser: false
+          });
+        }
+      }
+      router.push("/");
+    } catch (err) {
+      //console.log(err);
+    }
+  };
+
   const handleLogin = async (e: any) => {
     e.preventDefault()
-    console.log(user)
+    //console.log(user)
     try{
         await login(data.email, data.password)
         router.push("/")
     } catch(err){
-        console.log(err)
+        //console.log(err)
     }
 
     
@@ -62,6 +88,12 @@ const Login = () => {
             </svg>
           </span>
           Log In
+        </button>
+       
+      </div>
+      <div>
+      <button onClick={loginWithGoogle} type="submit" className="group relative flex w-full justify-center rounded-md bg-sky-800 py-2 px-3 text-md font-semibold text-white hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          Log In with Google 
         </button>
       </div>
     </form>

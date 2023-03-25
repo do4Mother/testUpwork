@@ -39,10 +39,10 @@ const Home: NextPage = () => {
             const data = userDoc.data();
             setFreeRewritesLeft(data?.freeRewritesLeft ?? null);
           } else {
-            console.log("userDoc does not exist");
+            //console.log("userDoc does not exist");
           }
         } catch (e) {
-          console.error("Error fetching freeRewritesLeft: ", e);
+          //console.error("Error fetching freeRewritesLeft: ", e);
         }
       }
     };
@@ -67,7 +67,7 @@ const Home: NextPage = () => {
     e.preventDefault();
     setGeneratedBulletPoints("");
     setLoading(true);
-    console.log("Free rewrites left:", freeRewritesLeft);
+    //console.log("Free rewrites left:", freeRewritesLeft);
 
     //if (freeRewritesLeft <= 0) {
     //  toast.error("You need to pay to keep generating bullet points.");
@@ -134,14 +134,14 @@ const Home: NextPage = () => {
             freeRewritesLeft: newFreeRewritesLeft,
           });
   
-          console.log("freeRewritesLeft updated", newFreeRewritesLeft);
+          //console.log("freeRewritesLeft updated", newFreeRewritesLeft);
           // Update state
           setFreeRewritesLeft(newFreeRewritesLeft);
         } else {
-          console.log("userDoc does not exist");
+          //console.log("userDoc does not exist");
         }
       } catch (e) {
-        console.error("Error updating freeRewritesLeft: ", e);
+        //console.error("Error updating freeRewritesLeft: ", e);
       }
     }
   };
@@ -186,13 +186,13 @@ required
 ></textarea>
 {!auth.user ? (
 
-<Link href="/login">
+<Link href="/signup">
   <button
   className="mt-10 w-full bg-gray-800 text-white py-3 rounded-md hover:bg-gray-500 transition-colors duration-300"
   type="submit"
   disabled={loading}
 >
-  Login to {freeRewritesLeft === 0 ? "Get Infinite Rewrites" : "Start Improving your Resume"}
+  Sign Up to {freeRewritesLeft === 0 ? "Get Infinite Rewrites" : "Start Improving your Resume"}
 </button>
 </Link>
 ) : (
