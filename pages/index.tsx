@@ -179,7 +179,7 @@ Enter your current bullet points:
 </p>
 </div>
 <textarea
-className="w-full border border-gray-400 py-3 px-4 mt-2 rounded-md focus:outline-none focus:border-sky-500"
+className="w-full border border-gray-400 py-3 px-4 mt-2 rounded-md focus:outline-none focus:border-sky-500 h-40"
 placeholder="e.g. Performed application software design and development as well as maintenance activities for products in production using Python"
 onChange={(e) => setBulletPoints(e.target.value)}
 required
