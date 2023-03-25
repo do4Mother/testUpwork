@@ -59,7 +59,8 @@ const Home: NextPage = () => {
     }
   };
 
-  const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that showcase the candidate's relevant skills and experiences for a ${jobTitle} position. Avoid using the exact job title in the bullet points. Aim for specificity and clarity in each point to demonstrate the candidate's suitability for the role. Always use this to start a bullet point ●`;
+  const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that demonstrate the candidate's relevant skills and experiences for a ${jobTitle} position. Avoid using the exact job title in the bullet points. Instead, aim for specificity and clarity in each point to showcase the candidate's suitability for the role. Begin each bullet point with the symbol ● to maintain consistency.`
+  // OG PROMPT const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that showcase the candidate's relevant skills and experiences for a ${jobTitle} position. Avoid using the exact job title in the bullet points. Aim for specificity and clarity in each point to demonstrate the candidate's suitability for the role. Always use this to start a bullet point ●`;
   //const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that emphasize the candidate's qualifications and suitability for a ${jobTitle} position. Avoid directly stating the job title in the bullet points. Ensure that each bullet point is clear, concise, and highlights a specific skill or experience that makes the candidate a strong fit for the role. Always use this to start a bullet point ●`;
   //const prompt = `Rewrite the bullet points in a way that highlights the candidate's suitability for the ${jobTitle} position: ${bulletPoints}. Make sure you don't include the ${jobTitle} in the bullet points. Make sure you generate a total of 6 bullet points including the ones the user provided.`;
 
@@ -204,7 +205,7 @@ required
       className="mt-10 w-full bg-green-500 text-white py-3 rounded-md hover:bg-green-600 transition-colors duration-300"
       type="button"
     ><a href="https://buy.stripe.com/8wM8xk5MZ5IC9i03cd">
-      Get Infinite Rewrites for $2.99
+      Get Infinite Rewrites for $2.99 (Beta Price)
       </a>
     </button>
      <p className="text-center text-md font-black py-4">
