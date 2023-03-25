@@ -150,50 +150,37 @@ const Home: NextPage = () => {
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Head>
-        <title>Bullet Point Generator</title>
+        <title>Resume Boost AI</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
   
      
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
-        <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
-          Improve your bullet points using AI
+        <h1 className="sm:text-6xl text-4xl max-w-[708px] font-black text-slate-900">
+          Boost your resume using AI 🤖
         </h1>
+   
         <form onSubmit={generateBulletPoints} className="max-w-xl w-full mt-10">
           <div className="flex mt-10 items-center space-x-3">
-            <Image
-              src="/job-title.png"
-              width={30}
-              height={30}
-              alt="Job Title Icon"
-              className="mb-5 sm:mb-0"
-            />
-            <p className="text-left font-medium">
+            <p className="text-left text-lg font-black">
               Enter the job title you are applying for:
             </p>
           </div>
           <input
 type="text"
 className="w-full border border-gray-400 py-3 px-4 mt-2 rounded-md focus:outline-none focus:border-sky-500"
-placeholder="e.g. Marketing Manager"
+placeholder="e.g. Software Engineer"
 onChange={(e) => setJobTitle(e.target.value)}
 required
 />
 <div className="flex mt-10 items-center space-x-3">
-<Image
-           src="/bullet-points.png"
-           width={30}
-           height={30}
-           alt="Bullet Points Icon"
-           className="mb-5 sm:mb-0"
-         />
-<p className="text-left font-medium">
+<p className="text-left text-lg font-black">
 Enter your current bullet points:
 </p>
 </div>
 <textarea
 className="w-full border border-gray-400 py-3 px-4 mt-2 rounded-md focus:outline-none focus:border-sky-500"
-placeholder="e.g. Increased social media engagement by 20%"
+placeholder="e.g. Performed application software design and development as well as maintenance activities for products in production using Python"
 onChange={(e) => setBulletPoints(e.target.value)}
 required
 ></textarea>
@@ -201,7 +188,7 @@ required
 
 <Link href="/login">
   <button
-  className="mt-10 w-full bg-gray-800 text-white py-3 rounded-md hover:bg-sky-600 transition-colors duration-300"
+  className="mt-10 w-full bg-gray-800 text-white py-3 rounded-md hover:bg-gray-500 transition-colors duration-300"
   type="submit"
   disabled={loading}
 >

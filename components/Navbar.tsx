@@ -27,9 +27,11 @@ const Navbar = () => {
         </button>
       </div>
       <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-        <div className="flex flex-shrink-0 items-center">
-          <img className="block h-8 w-auto lg:hidden" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company"></img>
-          <img className="hidden h-8 w-auto lg:block" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company"></img>
+        <div className="flex flex-shrink-0 items-center ">
+        <Link className="hover:scale-105" href="/" passHref>
+          <img className="block h-8 w-auto lg:hidden " src="/rbai.png" alt="Your Company"></img>
+          <img className="hidden h-8 w-auto lg:block lg:h-14" src="/rbai.png" alt="Your Company"></img>
+          </Link>
         </div>
         
       </div>
@@ -49,12 +51,12 @@ const Navbar = () => {
 
 <button type="button" className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
             
-            <Link className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" href="/login" passHref>Login</Link>
+            <Link className="text-gray-100 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-md font-black" href="/login" passHref>Login</Link>
               
           </button>
           <button type="button" className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
             
-        <Link className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" href="/signup" passHref>Sign Up</Link>
+        <Link  className="text-gray-100 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-md font-black" href="/signup" passHref>Sign Up</Link>
 
         </button>
         </>
