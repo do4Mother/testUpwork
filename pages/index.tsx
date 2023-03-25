@@ -192,30 +192,34 @@ required
   type="submit"
   disabled={loading}
 >
-  Login to {freeRewritesLeft === 0 ? "Get Infinite Rewrites" : "Generate Bullet Points"}
+  Login to {freeRewritesLeft === 0 ? "Get Infinite Rewrites" : "Start Improving your Resume"}
 </button>
 </Link>
 ) : (
 <>
   {freeRewritesLeft === 0 ? (
+    <>
     <button
       
       className="mt-10 w-full bg-green-500 text-white py-3 rounded-md hover:bg-green-600 transition-colors duration-300"
       type="button"
-    ><a href="https://buy.stripe.com/test_fZe6pZa8V8UO8JWdQR">
+    ><a href="https://buy.stripe.com/8wM8xk5MZ5IC9i03cd">
       Get Infinite Rewrites for $2.99
       </a>
     </button>
-   
+     <p className="text-center text-md font-black py-4">
+     Allow 2 - 5 minutes after paying for unlimited access to be activated ⏲️  
+     </p>
+     </>
   ) : (
     <button
       onClick={generateBulletPoints}
-      className="mt-10 w-full bg-sky-500 text-white py-3 rounded-md hover:bg-green-600 transition-colors duration-300"
+      className="mt-10 w-full bg-gray-800 text-white py-3 rounded-md hover:bg-gray-500 transition-colors duration-300"
       type="button"
     >
       {loading ? (
         <>
-          Generating bullet points <LoadingDots />
+          Generating New Bullet Points <LoadingDots />
         </>
       ) : (
         "Generate Bullet Points"
@@ -230,7 +234,7 @@ required
     <>
       <div>
         <h2 className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto">
-          Generated bullet points
+          Generated Bullet Points 👇🏼
         </h2>
       </div>
       <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">

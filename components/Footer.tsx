@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="text-center h-16 sm:h-20 w-full sm:pt-2 pt-4 border-t mt-5 flex sm:flex-row flex-col justify-between items-center px-3 space-y-3 sm:mb-0 mb-3">
       <div>
       <Link
-          href="https://twitter.com/nutlope"
+          href="https://twitter.com/balt1794"
           className="group"
           aria-label="TaxPal on Twitter"
         >

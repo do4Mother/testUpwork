@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext"
 
 
 const SignUp = () => {
-
+  const router = useRouter()
   const { user, signup } = useAuth()
   console.log(user)
   
@@ -17,6 +17,7 @@ const SignUp = () => {
     e.preventDefault()
         try{
             await signup(data.email, data.password)
+            router.push("/")
         } catch(err){
             console.log(err)
         }
@@ -62,7 +63,7 @@ const SignUp = () => {
               <path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" />
             </svg>
           </span>
-          Sign in
+          Sign Up
         </button>
       </div>
     </form>
