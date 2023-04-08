@@ -9,7 +9,7 @@ const Navbar = () => {
     return(
 <>
 
-      <nav className="bg-gray-800">
+      <nav className="bg-black">
   <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div className="relative flex h-16 items-center justify-between">
       <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -33,22 +33,22 @@ const Navbar = () => {
         <div className="relative ml-3">
           <div>
           {user ? (
-          <button type="button" className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+          <button type="button" className="border-solid border-2 border-white rounded-full bg-transparent p-1 text-gray-400 hover:border-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
             
-            <Link className="text-gray-100 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-md  font-black" href="/" onClick={() => {logout()}}>Log Out</Link>
+            <Link className="text-gray-100 rounded-md px-3 py-2 text-md  font-black" href="/" onClick={() => {logout()}}>Log Out</Link>
 
           </button>
            ): (
             <>
 
-<button type="button" className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+<button type="button" className="border-solid border-2 border-white rounded-full bg-transparent p-1 text-gray-400 hover:border-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
             
-            <Link className="text-gray-100 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-md font-black" href="/login" passHref>Login</Link>
+            <Link className="text-gray-100 rounded-md px-3 py-2 text-md font-black" href="/login" passHref>Login</Link>
               
           </button>
-          <button type="button" className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+          <button type="button" className="border-solid border-2 border-white rounded-full bg-transparent p-1 text-gray-400 hover:border-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ml-1">
             
-        <Link  className="text-gray-100 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-md font-black" href="/signup" passHref>Sign Up</Link>
+        <Link  className="text-gray-100 rounded-md px-3 py-2 text-md font-black" href="/signup" passHref>Sign Up</Link>
 
         </button>
         </>

@@ -191,7 +191,7 @@ required
 
 <Link href="/signup">
   <button
-  className="mt-10 w-full bg-gray-800 text-white py-3 rounded-md hover:bg-gray-500 transition-colors duration-300"
+  className="mt-10 w-full bg-gradient-to-r from-gray-500 via-red-500 to-red-500 text-white py-3 rounded-md transition-colors duration-300 hover:from-red-500 hover:via-pink-500 hover:to-gray-500"
   type="submit"
   disabled={loading}
 >
@@ -217,7 +217,7 @@ required
   ) : (
     <button
       onClick={generateBulletPoints}
-      className="mt-10 w-full bg-gray-800 text-white py-3 rounded-md hover:bg-gray-500 transition-colors duration-300"
+      className="mt-10 w-full bg-gradient-to-r from-gray-500 via-red-500 to-red-500 text-white py-3 rounded-md transition-colors duration-300 hover:from-red-500 hover:via-pink-500 hover:to-gray-500"
       type="button"
     >
       {loading ? (
