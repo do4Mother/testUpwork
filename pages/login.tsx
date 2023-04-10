@@ -26,7 +26,7 @@ const Login = () => {
         if (!userDocSnapshot.exists()) {
           await setDoc(userDocRef, {
             email: user.email,
-            freeRewritesLeft: 2,
+            freeRewritesLeft: 1,
             paidUser: false
           });
         }
