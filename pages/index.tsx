@@ -11,7 +11,8 @@ import { useRouter } from "next/router";
 import Link from 'next/link'
 import  { db, storage } from "../config/firebase"
 import { collection, addDoc, updateDoc, setDoc, serverTimestamp, getDoc, doc } from "firebase/firestore"; 
-
+import { loadStripe } from '@stripe/stripe-js';
+import Steps from "./steps";
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -64,6 +65,7 @@ const Home: NextPage = () => {
   // OG PROMPT const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that showcase the candidate's relevant skills and experiences for a ${jobTitle} position. Avoid using the exact job title in the bullet points. Aim for specificity and clarity in each point to demonstrate the candidate's suitability for the role. Always use this to start a bullet point ●`;
   //const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that emphasize the candidate's qualifications and suitability for a ${jobTitle} position. Avoid directly stating the job title in the bullet points. Ensure that each bullet point is clear, concise, and highlights a specific skill or experience that makes the candidate a strong fit for the role. Always use this to start a bullet point ●`;
   //const prompt = `Rewrite the bullet points in a way that highlights the candidate's suitability for the ${jobTitle} position: ${bulletPoints}. Make sure you don't include the ${jobTitle} in the bullet points. Make sure you generate a total of 6 bullet points including the ones the user provided.`;
+
 
   const generateBulletPoints = async (e: any) => {
     e.preventDefault();
@@ -148,6 +150,34 @@ const Home: NextPage = () => {
     }
   };
 
+  const handleCheckout = async () => {
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/hello', {
+        method: 'POST',
+      });
+
+      const { sessionId } = await response.json();
+
+      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
+      if (!stripe) {
+        console.error("Stripe failed to load.");
+        return;
+      }
+      
+      const { error } = await stripe.redirectToCheckout({ sessionId });
+
+      if (error) {
+        console.error(error);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
+    setLoading(false);
+  };
+
 
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
@@ -206,9 +236,11 @@ required
       
       className="mt-10 w-full bg-green-500 text-white py-3 rounded-md hover:bg-green-600 transition-colors duration-300"
       type="button"
-    ><a href="https://buy.stripe.com/8wM8xk5MZ5IC9i03cd">
+    >
+      <a href="https://buy.stripe.com/8wM8xk5MZ5IC9i03cd">
       Get Infinite Rewrites for $2.99 (Beta Price)
       </a>
+  
     </button>
      <p className="text-center text-md font-black py-4">
      Allow 2 - 5 minutes after paying for unlimited access to be activated ⏲️  
@@ -273,6 +305,7 @@ required
 
 </form>
 </main>
+<Steps />
 <Footer />
 <Toaster />
 </div>
