@@ -1,11 +1,44 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useAuth } from '../context/AuthContext';
-
-
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { auth } from "../config/firebase"
+import  { db } from "../config/firebase"
+import { collection, addDoc, updateDoc, serverTimestamp, getDoc, setDoc, doc } from "firebase/firestore";
 const Navbar = () => {
+  const router = useRouter()
+
   const { user, logout } = useAuth()
-  console.log("Navbar rendered");
+  //onsole.log("Navbar rendered");
+
+
+  const googleAuth =  new GoogleAuthProvider();
+
+  const loginWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleAuth);
+      const user = auth.currentUser;
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        const userDocSnapshot = await getDoc(userDocRef);
+        if (!userDocSnapshot.exists()) {
+          await setDoc(userDocRef, {
+            email: user.email,
+            freeRewritesLeft: 1,
+            paidUser: false
+          });
+        }
+      }
+      router.push("/");
+    } catch (err) {
+      //console.log(err);
+    }
+  };
+
+
+
+
     return(
 <>
 
@@ -41,16 +74,17 @@ const Navbar = () => {
            ): (
             <>
 
-<button type="button" className="border-solid border-2 border-white rounded-full bg-transparent p-1 text-gray-400 hover:border-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+<button type="button" className=" text-gray-100 px-3  text-md font-black border-solid border-2 border-white rounded-full bg-transparent p-1 text-gray-400 hover:border-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" onClick={loginWithGoogle}>
             
-            <Link className="text-gray-100 rounded-md px-3 py-2 text-md font-black" href="/login" passHref>Login</Link>
+           Sign Up with Google
               
           </button>
-          <button type="button" className="border-solid border-2 border-white rounded-full bg-transparent p-1 text-gray-400 hover:border-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ml-1">
+       {/*   <button type="button" className="border-solid border-2 border-white rounded-full bg-transparent p-1 text-gray-400 hover:border-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ml-1">
             
         <Link  className="text-gray-100 rounded-md px-3 py-2 text-md font-black" href="/signup" passHref>Sign Up</Link>
 
         </button>
+           */}
         </>
         )}
           </div>

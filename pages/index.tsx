@@ -237,13 +237,13 @@ required
       className="mt-10 w-full bg-green-500 text-white py-3 rounded-md hover:bg-green-600 transition-colors duration-300"
       type="button"
     >
-      <a href="https://buy.stripe.com/8wM8xk5MZ5IC9i03cd">
-      Get Infinite Rewrites for $2.99 (Beta Price)
+      <a href="https://buy.stripe.com/5kA14S6R37QK8dWdQS">
+      Get Infinite Rewrites for $4.99
       </a>
   
     </button>
      <p className="text-center text-md font-black py-4">
-     Allow 2 - 5 minutes after paying for unlimited access to be activated ⏲️  
+     Allow 2 - 5 minutes after paying for unlimited access 🕰️  
      </p>
      </>
   ) : (
