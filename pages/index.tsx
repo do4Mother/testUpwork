@@ -245,12 +245,12 @@ required
       type="button"
     >
       <a href="https://buy.stripe.com/5kA14S6R37QK8dWdQS">
-      Get Infinite Rewrites for $4.99
+      Get 5 Rewrites for $5
       </a>
   
     </button>
      <p className="text-center text-md font-black py-4">
-     Allow 2 - 5 minutes after paying for unlimited access 🕰️  
+     Tokens never expire  
      </p>
      </>
   ) : (
