@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRef, useState, useContext, useEffect } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import Footer from "../components/Footer";
-
+import FreeRewritesLeft from "../components/FreeRewritesLeft";
 import LoadingDots from "../components/LoadingDots";
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from "next/router";
@@ -13,6 +13,7 @@ import  { db, storage } from "../config/firebase"
 import { collection, addDoc, updateDoc, setDoc, serverTimestamp, getDoc, doc } from "firebase/firestore"; 
 import { loadStripe } from '@stripe/stripe-js';
 import Steps from "./steps";
+
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -25,6 +26,8 @@ const Home: NextPage = () => {
 
   const { user } = useAuth();
   const [freeRewritesLeft, setFreeRewritesLeft] = useState<number | null>(null);
+
+
 
 
   useEffect(() => {
@@ -191,7 +194,11 @@ const Home: NextPage = () => {
         <h1 className="sm:text-6xl text-4xl max-w-[708px] font-black text-slate-900">
           Boost your resume using AI 🤖
         </h1>
-   
+        <div>
+      {/* ... */}
+      <FreeRewritesLeft freeRewritesLeft={freeRewritesLeft} />
+      {/* ... */}
+    </div>
         <form onSubmit={generateBulletPoints} className="max-w-xl w-full mt-10">
           <div className="flex mt-10 items-center space-x-3">
             <p className="text-left text-lg font-black">
@@ -305,6 +312,7 @@ required
 
 </form>
 </main>
+
 <Steps />
 <Footer />
 <Toaster />
