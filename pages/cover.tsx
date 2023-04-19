@@ -12,10 +12,11 @@ import Link from 'next/link'
 import  { db, storage } from "../config/firebase"
 import { collection, addDoc, updateDoc, setDoc, serverTimestamp, getDoc, doc } from "firebase/firestore"; 
 import { loadStripe } from '@stripe/stripe-js';
-import Steps from "./steps";
 
 
-const Home: NextPage = () => {
+
+
+const Cover: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [bulletPoints, setBulletPoints] = useState("");
   const [generatedBulletPoints, setGeneratedBulletPoints] = useState<string>("");
@@ -63,8 +64,8 @@ const Home: NextPage = () => {
     }
   };
 
-  //const prompt = `Using the ${bulletPoints} provided, expand on each point to showcase the candidate's relevant skills and experiences for a ${jobTitle} position. To ensure clarity and specificity, avoid using the exact job title in the bullet points. Instead, use concrete examples and results to demonstrate the candidate's suitability for the role. Begin each bullet point with the symbol ● to maintain consistency. Give me 6 bullet points in total.`
-  const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that demonstrate the candidate's relevant skills and experiences for a ${jobTitle} position. Avoid using the exact job title in the bullet points. Instead, aim for specificity and clarity in each point to showcase the candidate's suitability for the role. Begin each bullet point with the symbol ● to maintain consistency.`
+  const prompt = `Write a cover letter using this resume:${jobTitle} and this job description:${bulletPoints}. Break it into 3 or 4 paragraphs max and use to To whom it may concern instead of dear hiring manager`
+  //const prompt = `Using the provided ${bulletPoints}, create 1 bullet point that demonstrate the candidate's relevant skills and experiences for a ${jobTitle} position. Avoid using the exact job title in the bullet points. Instead, aim for specificity and clarity in each point to showcase the candidate's suitability for the role. Begin each bullet point with the symbol ● to maintain consistency.`
   // OG PROMPT const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that showcase the candidate's relevant skills and experiences for a ${jobTitle} position. Avoid using the exact job title in the bullet points. Aim for specificity and clarity in each point to demonstrate the candidate's suitability for the role. Always use this to start a bullet point ●`;
   //const prompt = `Using the provided ${bulletPoints}, create 6 bullet points that emphasize the candidate's qualifications and suitability for a ${jobTitle} position. Avoid directly stating the job title in the bullet points. Ensure that each bullet point is clear, concise, and highlights a specific skill or experience that makes the candidate a strong fit for the role. Always use this to start a bullet point ●`;
   //const prompt = `Rewrite the bullet points in a way that highlights the candidate's suitability for the ${jobTitle} position: ${bulletPoints}. Make sure you don't include the ${jobTitle} in the bullet points. Make sure you generate a total of 6 bullet points including the ones the user provided.`;
@@ -89,7 +90,7 @@ const Home: NextPage = () => {
     return;
   }
     
-    const response = await fetch("/api/generate", {
+    const response = await fetch("/api/coverLetter", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -112,6 +113,7 @@ const Home: NextPage = () => {
     const reader = data.getReader();
     const decoder = new TextDecoder();
     let done = false;
+    
 
     while (!done) {
       const { value, done: doneReading } = await reader.read();
@@ -122,6 +124,8 @@ const Home: NextPage = () => {
     scrollToGeneratedBulletPoints();
     setLoading(false);
     await updateFreeRewritesLeft();
+
+    
   };
 
   const updateFreeRewritesLeft = async () => {
@@ -180,7 +184,8 @@ const Home: NextPage = () => {
 
     setLoading(false);
   };
-
+  
+  
 
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
@@ -192,43 +197,42 @@ const Home: NextPage = () => {
      
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
         <h1 className="sm:text-6xl text-4xl max-w-[708px] font-black text-slate-900">
-          Boost your resume using AI 🤖
+          Create a Cover Letter using AI 🤖
         </h1>
         <div>
       {/* ... */}
       <FreeRewritesLeft freeRewritesLeft={freeRewritesLeft} />
       {/* ... */}
-      <Link href="/cover">
+      <Link href="/">
       <button
       className="mt-10 w-full bg-gradient-to-r from-gray-800 to-gray-800 via-black  text-white px-3 py-3 rounded-md transition-colors duration-300 hover:from-gray-600 hover:via-black hover:to-gray-600"
       type="button"
     >
-          Generate a Cover Letter
+          Improve Bullet Points
     </button>
     </Link>
     </div>
-        <form onSubmit={generateBulletPoints} className="max-w-xl w-full mt-10"> 
+        <form onSubmit={generateBulletPoints} className="max-w-xl w-full mt-10">
           <div className="flex mt-10 items-center space-x-3">
             <p className="text-left text-lg font-black">
-              Enter the job title you are applying for:
+              Paste your resume below:
             </p>
           </div>
-          <input
-type="text"
-className="w-full border border-gray-400 py-3 px-4 mt-2 rounded-md focus:outline-none focus:border-sky-500"
-placeholder="e.g. Software Engineer"
+          <textarea
+className="w-full border border-gray-400 py-3 px-4 mt-2 rounded-md focus:outline-none focus:border-sky-500 h-60"
+placeholder="Resume goes here"
 onChange={(e) => setJobTitle(e.target.value)}
 required
-/>
+></textarea>
 <div className="flex mt-10 items-center space-x-3">
 <p className="text-left text-lg font-black">
-Enter your current bullet points (2 bullet points at a time or max 320 characters):
+Paste the job description of the position you are applying for:
 </p>
 </div>
 <textarea
-className="w-full border border-gray-400 py-3 px-4 mt-2 rounded-md focus:outline-none focus:border-sky-500 h-40"
-placeholder="e.g. Performed application software design and development as well as maintenance activities for products in production using Python"
-maxLength={320}
+className="w-full border border-gray-400 py-3 px-4 mt-2 rounded-md focus:outline-none focus:border-sky-500 h-60"
+placeholder="Job description goes here"
+
 onChange={(e) => setBulletPoints(e.target.value)}
 required
 ></textarea>
@@ -240,7 +244,7 @@ required
   type="submit"
   disabled={loading}
 >
-  Sign Up to {freeRewritesLeft === 0 ? "Get Infinite Rewrites" : "Start Improving your Resume"}
+  Sign Up to {freeRewritesLeft === 0 ? "Get Rewrites" : "Start Improving your Cover Letter"}
 </button>
 </Link>
 ) : (
@@ -258,7 +262,7 @@ required
   
     </button>
      <p className="text-center text-md font-black py-4">
-     Tokens never expire. 1 Token = 1 Rewrite
+     Tokens never expire. 1 Token = 1 Cover Letter  
      </p>
      </>
   ) : (
@@ -269,10 +273,10 @@ required
     >
       {loading ? (
         <>
-          Generating New Bullet Points <LoadingDots />
+          Generating Cover Letter <LoadingDots />
         </>
       ) : (
-        "Generate Bullet Points"
+        "Generate Cover Letter"
       )}
     </button>
   )}
@@ -284,10 +288,10 @@ required
     <>
       <div>
         <h2 className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto">
-          Generated Bullet Points 👇🏼
+          Generated Cover Letter 👇🏼
         </h2>
       </div>
-      <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
+      <div className="space-y-8 flex flex-col items-left justify-left max-w-xl mx-auto">
         {generatedBulletPoints
           .split("●")
           .map((generatedBulletPoint, index) => {
@@ -306,7 +310,9 @@ required
                 }}
                 key={index}
               >
-                <p>{generatedBulletPoint.trim()}</p>
+                {generatedBulletPoint.trim().split("\n").map((paragraph, index) => {
+                  return <p key={index} className="my-4 text-left">{paragraph.trim()}</p>
+                })}
               </div>
             );
           })}
@@ -318,14 +324,16 @@ required
 
 
 
+
 </form>
+
 </main>
 
-<Steps />
+
 <Footer />
 <Toaster />
 </div>
 );
 };
 
-export default Home;
+export default Cover;
